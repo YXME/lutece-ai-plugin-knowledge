@@ -1,0 +1,43 @@
+<#include "managedocuments_tabs.html" />
+<@tabs2 tab="document" />
+
+<@box>
+	<@boxHeader title='#i18n{knowledge.manage_document.title}' boxTools=true>
+		<@tform class='form-inline pull-right' name='manage_document' action='jsp/admin/plugins/knowledge/ManageDocuments.jsp'>
+			<@button type='submit' name='view_createDocument' buttonIcon='plus' title='#i18n{knowledge.manage_documents.buttonAdd}' />
+			<@button type='submit' name='view_chat' buttonIcon='plus' title='#i18n{knowledge.view_chat.buttonAdd}' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <th>#i18n{knowledge.manage_documents.columnDocumentName}</th>
+            <th>#i18n{knowledge.manage_documents.columnDocumentData}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+        <#list document_list as document >
+        <tr>
+            <td>
+				${document.documentName}
+			</td>
+            <td>
+				<@link href="${document.documentData.url!}">${document.documentData.title!}</@link>
+			</td>
+        	<td>
+				<@aButton href='jsp/admin/plugins/knowledge/ManageDocuments.jsp?view=modifyDocument&id=${document.id}' title='#i18n{portal.util.labelModify}' hideTitle=['all'] buttonIcon='pencil' />
+						
+				<@aButton href='jsp/admin/plugins/knowledge/ManageDocuments.jsp?action=confirmRemoveDocument&id=${document.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' hideTitle=['all'] color='btn-danger'  />
+
+	        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>

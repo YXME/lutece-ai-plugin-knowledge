@@ -1,0 +1,18 @@
+<#include "managetags_tabs.html" />
+
+
+<@box>
+	<@boxHeader title='#i18n{knowledge.view_chat.title}' />
+	<@boxBody>
+    <@tform class="form-horizontal" method="post" name="view_chat" action="jsp/admin/plugins/knowledge/ManageDocuments.jsp">
+			<@messages errors=errors />
+			<@formGroup mandatory=true>
+				<@span>${chatData}</@span>
+			</@formGroup>
+			<@formGroup mandatory=true>
+				<@input type='text' id='question' name='question' />
+			</@formGroup>
+        <@actionButtons button1Name="action_sendChat"/>
+    </@tform>
+	</@boxBody>
+</@box>

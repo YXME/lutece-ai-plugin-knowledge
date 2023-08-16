@@ -1,0 +1,23 @@
+<#include "managedocuments_tabs.html" />
+<@tabs2 tab="document" />
+
+
+<@box>
+	<@boxHeader title='#i18n{knowledge.modify_document.title}' />
+	<@boxBody>
+    <@tform class="form-horizontal" method="post" name="modify_document" action="jsp/admin/plugins/knowledge/ManageDocuments.jsp" enctype="multipart/form-data">
+			<@messages errors=errors />
+			<@input type="hidden" id="id" name="id" value="${document.id}"/>
+			<@input type="hidden" value="${token}" name="token" />
+			
+			<@formGroup labelFor='document_name' labelKey='#i18n{knowledge.modify_document.labelDocumentName}' mandatory=true>
+				<@input type='text' id='document_name' name='document_name'  value='${document.documentName!\'\'}' tabIndex='0' />
+			</@formGroup>
+			<@formGroup labelFor='document_data' labelKey='#i18n{knowledge.modify_document.labelDocumentData}' >
+				<@input type='file' id="document_data" name="document_data" tabIndex="1" showFileUrl=true fileURL="${document.documentData.url!}" fileName="${document.documentData.title!}" value="${document.documentData.fileKey!\'\'}" />
+			</@formGroup>
+		<@actionButtons button1Name="action_loadDocument" />
+        <@actionButtons button1Name="action_modifyDocument" button2Name="view_manageDocument"/>
+    </@tform>
+	</@boxBody>
+</@box>

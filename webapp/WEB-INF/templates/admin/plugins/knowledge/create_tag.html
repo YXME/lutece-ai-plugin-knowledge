@@ -1,0 +1,19 @@
+<#include "managetags_tabs.html" />
+<@tabs2 tab="tag" />
+<@box>
+	<@boxHeader title='#i18n{knowledge.create_tag.title}' />
+	<@boxBody>
+    <@tform name='create_tag' action='jsp/admin/plugins/knowledge/ManageTags.jsp' >
+
+        <@messages errors=errors />
+        <@input type="hidden" id="id" name="id"/>
+        <@input type="hidden" value="${token}" name="token" />
+
+		<@formGroup labelFor='tag_name' labelKey='#i18n{knowledge.modify_tag.labelTagName}' mandatory=true>
+			<@input type='text' id='tag_name' name='tag_name'  maxlength=255 value='${tag.tagName!\'\'}' tabIndex='0' />
+		</@formGroup>
+				
+		<@actionButtons button1Name="action_createTag" button2Name="view_manageTag"/>
+    </@tform>
+	</@boxBody>
+</@box>

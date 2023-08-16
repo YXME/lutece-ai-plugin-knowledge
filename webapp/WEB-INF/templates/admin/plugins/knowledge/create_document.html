@@ -1,0 +1,22 @@
+<#include "managedocuments_tabs.html" />
+<@tabs2 tab="document" />
+<@box>
+	<@boxHeader title='#i18n{knowledge.create_document.title}' />
+	<@boxBody>
+    <@tform name='create_document' action='jsp/admin/plugins/knowledge/ManageDocuments.jsp' enctype="multipart/form-data">
+
+        <@messages errors=errors />
+        <@input type="hidden" id="id" name="id"/>
+        <@input type="hidden" value="${token}" name="token" />
+
+		<@formGroup labelFor='document_name' labelKey='#i18n{knowledge.modify_document.labelDocumentName}' mandatory=true>
+			<@input type='text' id='document_name' name='document_name'  value='${document.documentName!\'\'}' tabIndex='0' />
+		</@formGroup>
+		<@formGroup labelFor='document_data' labelKey='#i18n{knowledge.modify_document.labelDocumentData}' mandatory=true>
+          	<@input type='file' id='document_data' name='document_data'  maxlength=50 value='${document.documentData!\'\'}' tabIndex='1' />
+		</@formGroup>
+				
+		<@actionButtons button1Name="action_createDocument" button2Name="view_manageDocument"/>
+    </@tform>
+	</@boxBody>
+</@box>

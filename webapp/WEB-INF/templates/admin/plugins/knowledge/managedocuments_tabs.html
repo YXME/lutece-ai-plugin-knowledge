@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@tabList>
+			<li <#if tab="document">class="active"</#if>>
+				<@aButton href="jsp/admin/plugins/knowledge/ManageDocuments.jsp">#i18n{knowledge.manage_documents.pageTitle}</@aButton>
+			</li>
+	</@tabList>
+</@tabs>
+
+</#macro>

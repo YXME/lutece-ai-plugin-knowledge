@@ -1,0 +1,38 @@
+<#include "managetags_tabs.html" />
+<@tabs2 tab="tag" />
+
+<@box>
+	<@boxHeader title='#i18n{knowledge.manage_tag.title}' boxTools=true>
+		<@tform class='form-inline pull-right' name='manage_tag' action='jsp/admin/plugins/knowledge/ManageTags.jsp'>
+			<@button type='submit' name='view_createTag' buttonIcon='plus' title='#i18n{knowledge.manage_tags.buttonAdd}' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <th>#i18n{knowledge.manage_tags.columnTagName}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+        <#list tag_list as tag >
+        <tr>
+            <td>
+				${tag.tagName}
+			</td>
+        	<td>
+				<@aButton href='jsp/admin/plugins/knowledge/ManageTags.jsp?view=modifyTag&id=${tag.id}' title='#i18n{portal.util.labelModify}' hideTitle=['all'] buttonIcon='pencil' />
+						
+				<@aButton href='jsp/admin/plugins/knowledge/ManageTags.jsp?action=confirmRemoveTag&id=${tag.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' hideTitle=['all'] color='btn-danger'  />
+
+	        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>

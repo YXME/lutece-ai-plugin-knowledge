@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@tabList>
+			<li <#if tab="tag">class="active"</#if>>
+				<@aButton href="jsp/admin/plugins/knowledge/ManageTags.jsp">#i18n{knowledge.manage_tags.pageTitle}</@aButton>
+			</li>
+	</@tabList>
+</@tabs>
+
+</#macro>
