@@ -19,6 +19,7 @@ import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiTokenizer;
+import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import java.util.HashMap;
 import java.util.List;
@@ -73,15 +74,29 @@ public final class DocumentLoaderService {
 	{
 		try 
 		{
-			Document document = _pdfParser.parse(file.getInputStream());
-			document.metadata().add("file_name", file.getName());
-			document.metadata();
-			
-		    
-		    List<TextSegment> segments = _splitter.split(document);
-		    List<Embedding> embeddings = embeddingModel.embedAll(segments);
-		
-		    embeddingStore.addAll(embeddings, segments);
+			if(file.getName().contains(".pdf")) {
+				Document document = _pdfParser.parse(file.getInputStream());
+				document.metadata().add("file_name", file.getName());
+				document.metadata();
+				
+			    List<TextSegment> segments = _splitter.split(document);
+			    List<Embedding> embeddings = embeddingModel.embedAll(segments);
+			    
+			    embeddingStore.addAll(embeddings, segments);
+			}
+			else if(file.getName().contains(".doc")) {
+				Document document = _docparser.parse(file.getInputStream());
+				document.metadata().add("file_name", file.getName());
+				document.metadata();
+				
+			    List<TextSegment> segments = _splitter.split(document);
+			    List<Embedding> embeddings = embeddingModel.embedAll(segments);
+			    
+			    embeddingStore.addAll(embeddings, segments);
+			}
+			else {
+				return;
+			}
 		} 
 		catch (IOException e) 
 		{
