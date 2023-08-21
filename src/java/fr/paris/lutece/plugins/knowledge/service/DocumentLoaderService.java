@@ -3,6 +3,7 @@ package fr.paris.lutece.plugins.knowledge.service;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentParser;
 import dev.langchain4j.data.document.DocumentSplitter;
+import dev.langchain4j.data.document.DocumentType;
 import dev.langchain4j.data.document.splitter.SentenceSplitter;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
@@ -18,7 +19,7 @@ import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiTokenizer;
-import dev.langchain4j.store.embedding.InMemoryEmbeddingStore;
+import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public final class DocumentLoaderService {
     static double minSimilarity = 0.5;
     
 	static DocumentParser _pdfParser = new PdfDocumentParser();
-	static DocumentParser _textparser = new TextDocumentParser();
+	static DocumentParser _docparser = new TextDocumentParser(DocumentType.DOC);
 	static DocumentSplitter _splitter = new SentenceSplitter();
 	static EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
 	
@@ -64,11 +65,8 @@ public final class DocumentLoaderService {
             .build();
 	
 
-    static ChatMemory chatMemory = TokenWindowChatMemory.builder()
-            .systemMessage("Tu es un assistant qui réponds à des requêtes sur les rapports du Conseil de Paris*"
-            		+ "Chaque requête contiendra des informations pour t'aider à apporter des réponses.")
-            .tokenizer(new OpenAiTokenizer(GPT_3_5_TURBO))
-            .build();
+    static ChatMemory chatMemory = TokenWindowChatMemory
+    		.builder().maxTokens(1, new OpenAiTokenizer(GPT_3_5_TURBO)).build();
 
 	
 	public static void loadFile(FileItem file) 
@@ -77,6 +75,8 @@ public final class DocumentLoaderService {
 		{
 			Document document = _pdfParser.parse(file.getInputStream());
 			document.metadata().add("file_name", file.getName());
+			document.metadata();
+			
 		    
 		    List<TextSegment> segments = _splitter.split(document);
 		    List<Embedding> embeddings = embeddingModel.embedAll(segments);

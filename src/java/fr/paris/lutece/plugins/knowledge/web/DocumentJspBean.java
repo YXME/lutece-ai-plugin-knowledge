@@ -243,8 +243,6 @@ public class DocumentJspBean extends AbstractPaginatorJspBean <Integer, Document
   			}
   		}
 
-  		DocumentLoaderService.askQuestion("Combien");
-
         return redirectView( request, VIEW_MANAGE_DOCUMENTS );
     }
     
@@ -263,8 +261,7 @@ public class DocumentJspBean extends AbstractPaginatorJspBean <Integer, Document
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		IFileStoreServiceProvider fileStoreService = DocumentHome.getFileStoreServiceProvider( );
         FileItem document_data = multipartRequest.getFile( "document_data" );
-        
-        DocumentLoaderService.loadFile(document_data);
+
         
         if ( document_data != null && document_data.getSize( ) > 0 )
         {
@@ -274,6 +271,7 @@ public class DocumentJspBean extends AbstractPaginatorJspBean <Integer, Document
                 File localFile = new File( );
                 localFile.setFileKey( strFileStoreKey );
                 _document.setDocumentData( localFile );
+                DocumentLoaderService.loadFile(document_data);
             }
             catch (Exception e) 
             {
