@@ -34,7 +34,7 @@
         <dependency>
             <groupId>fr.paris.lutece</groupId>
             <artifactId>lutece-core</artifactId>
-            <version>[7.0.10-SNAPSHOT]</version>
+            <version>[7.0.10-SNAPSHOT,)</version>
             <type>lutece-core</type>
         </dependency>
         <dependency>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j</artifactId>
-            <version>0.21.0</version>
+            <version>0.22.0</version>
         </dependency>
     </dependencies>
     <properties>

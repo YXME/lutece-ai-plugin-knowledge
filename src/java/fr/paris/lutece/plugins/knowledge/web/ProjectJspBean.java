@@ -77,7 +77,7 @@ public class ProjectJspBean extends AbstractKnowledgeManagerJspBean<Integer, Pro
     // Parameters
     private static final String PARAMETER_ID_PROJECT = "id";
     private static final String PARAMETER_CLEAR_MESSAGES_PROJECT = "clear";
-    private static final String PARAMETER_ID_PROJECT_DOCUMENT = "id";
+    private static final String PARAMETER_ID_PROJECT_DOCUMENT = "documentId";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_PROJECTS = "knowledge.manage_projects.pageTitle";

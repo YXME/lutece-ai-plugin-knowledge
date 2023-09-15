@@ -146,10 +146,28 @@ public class EmbeddingService
         File file = fileStoreService.getFileMetaData( document.getDocumentData( ).getFileKey( ) );
         try ( InputStream inputStream = fileStoreService.getInputStream( file.getFileKey( ) ) )
         {
+        	Document document4j;
+        	String extension = file.getTitle().substring(file.getTitle().lastIndexOf("."), file.getTitle().length());
 
-            Document document4j = new PdfDocumentParser( ).parse( inputStream );
+        	switch(extension) {
+        		case ".pdf" :
+        			document4j= new PdfDocumentParser( ).parse( inputStream );
+        			break;
+        		case ".docx":
+        			document4j= new MsOfficeDocumentParser( DocumentType.DOC ).parse( inputStream );
+        			break;
+        		case ".pptx":
+        			document4j= new MsOfficeDocumentParser( DocumentType.PPT ).parse( inputStream );
+        			break;
+        		case ".xlsx":
+        			document4j= new MsOfficeDocumentParser( DocumentType.XLS ).parse( inputStream );
+        			break;
+        		default:
+        			document4j= new TextDocumentParser( DocumentType.TXT ).parse( inputStream );
+        			break;
+        	}
 
-            List<TextSegment> segments = new SentenceSplitter( ).split( document4j );
+            List<TextSegment> segments = new DocumentByLineSplitter(100).split( document4j );
             List<Embedding> embeddings = embeddingModel.embedAll( segments );
 
             List<fr.paris.lutece.plugins.knowledge.business.Embedding> knowledgeEmbeddings = new ArrayList<>( );

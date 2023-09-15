@@ -112,14 +112,14 @@
             <#list document_list as document>
                 <div class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="text-truncate me-3" title="${document.documentName}"><i class="ti ti-file-type-pdf"></i> ${document.documentName}</div>
-                    <div><button type="button" class="btn btn-light btn-sm"><i class="ti ti-trash"></i></button></div>
+                    <div><@aButton name="action_" href='jsp/admin/plugins/knowledge/ManageProjects.jsp?action=removeProjectDocument&id=${project.id}&documentId=${document.id}' color='primary' size=''><i class="ti ti-trash"></i></@aButton></div>
                 </div>
             </#list>
         </div>
         <@tform method='post' action='jsp/admin/plugins/knowledge/ManageProjects.jsp' params='enctype="multipart/form-data"'>
             <div class="d-flex align-items-center">
-				<input type="file" class="" id="file" name="file" accept=".pdf,.doc,.docx">
-                <button type="button" class="btn btn-primary" onclick="triggerFileSelect()"><i class="ti ti-plus"></i></button>
+				<input type="file" class="" id="file" name="file" accept=".pdf,.xlsx,.pptx,.docx">
+<!--                 <button type="button" class="btn btn-primary" onclick="triggerFileSelect()"><i class="ti ti-plus"></i></button> -->
                 <@button type='submit' name="action_addProjectDocument" buttonIcon='plus' title='Ajouter' color='primary' size='' />
             </div>
         </@tform>
@@ -131,7 +131,7 @@
 <script>
 <#noparse>
 document.addEventListener('DOMContentLoaded', () => {
-    const chatMessages = document.getElementById('chat-messages');
+    const chatMessages = document.getElementB-yId('chat-messages');
     const inputField = document.querySelector('input[name="question"]');
     const selectField = document.querySelector('select[name="modelName"]');
 
